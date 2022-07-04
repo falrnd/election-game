@@ -977,7 +977,6 @@ void Main() {
 					font80(U"当選！").draw(280, 30, Palette::White);
 					Rect{ 200, 400, 400, 100 }.draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, colorP1);
-					ColorF{ Palette::White, 0.5 + 0.5 * ButtonA[9] };
 				}
 				else {
 					Rect{ 0, 0, 800, 600 }.draw(ColorF{ colorP2, 0.90 });

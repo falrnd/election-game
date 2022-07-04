@@ -122,7 +122,8 @@ void Vote_Kakutei() {
 			double Ken_Gosa = 1.5 * Norm();
 			double VoteRate = 0.01 * (VoteRate1 + Vote_Gosa);
 			if (Wakamono[i][j] == false) VoteRate = 0.01 * (VoteRate2 + Vote_Gosa);
-			VoteRate += 0.05 * Norm(); VoteRate = Min(0.9999, Max(0.0001, VoteRate));
+			VoteRate += 0.05 * Norm();
+			VoteRate = Clamp(VoteRate, 0.0001, 0.9999);
 			P1[i][j] = 10000.0 * VoteRate * (1.0 / (1.0 + exp(-(Keisei[i][j] + OverAll_Gosa + Ken_Gosa) / 10.0)));
 			P2[i][j] = 10000.0 * VoteRate * (1.0 / (1.0 + exp(+(Keisei[i][j] + OverAll_Gosa + Ken_Gosa) / 10.0)));
 		}
@@ -213,7 +214,7 @@ void Refresh() {
 				mins = Min(mins, 1.0 * Keisei[rx][ry]);
 				maxs = Max(maxs, 1.0 * Keisei[rx][ry]);
 			}
-			double newscore = Min(maxs, Max(mins, score));
+			double newscore = Clamp(score, mins, maxs);
 			if (newscore >= 0) NewKeisei[i][j] = (int)(0.5 + newscore);
 			else NewKeisei[i][j] = -(int)(0.5 - newscore);
 		}
@@ -728,8 +729,9 @@ void Main() {
 
 				// ボタン・時間の更新
 				for (int i = 0; i < 6; i++) {
-					if (i != MouseState) ButtonA[i] = Max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime());
-					if (i == MouseState) ButtonA[i] = Min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
+					ButtonA[i] = i != MouseState
+						? Max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime())
+						: Min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
 				}
 				ButtonA[6] = Max(0.0, ButtonA[6] - 1.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
@@ -766,10 +768,9 @@ void Main() {
 				}
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 9; j++) {
-						if (i == StateX && j == StateY)
-							ButtonB[i][j] = Min(1.0, ButtonB[i][j] + 5.0 * Scene::DeltaTime());
-						else
-							ButtonB[i][j] = Max(0.0, ButtonB[i][j] - 5.0 * Scene::DeltaTime());
+						ButtonB[i][j] = (i == StateX && j == StateY)
+							? Min(1.0, ButtonB[i][j] + 5.0 * Scene::DeltaTime())
+							: Max(0.0, ButtonB[i][j] - 5.0 * Scene::DeltaTime());
 					}
 				}
 				WaitTime += Scene::DeltaTime();
@@ -789,10 +790,9 @@ void Main() {
 			if (Situation == 8) {
 				int MouseState = -1;
 				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
-				if (MouseState == 0)
-					ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				else
-					ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				ButtonA[7] = MouseState == 0
+					? Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime())
+					: Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -805,10 +805,9 @@ void Main() {
 			if (Situation == 4) {
 				int MouseState = -1;
 				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
-				if (MouseState == 0)
-					ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				else
-					ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				ButtonA[7] = MouseState == 0
+					? Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime())
+					: Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -832,7 +831,8 @@ void Main() {
 				if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {
 					GetLastClick = Scene::Time();
 					if (MouseState == 0 && Card == 0) {
-						Card = 1; int val = rand() % 200;
+						Card = 1;
+						int val = Random(199);
 						if (val < 92) CardID = val / 23;
 						else if (val < 100) CardID = 4;
 						else if (val < 108) CardID = 5;
@@ -944,7 +944,10 @@ void Main() {
 			int CurrentVote1 = 0, CurrentVote2 = 0;
 			for (int i = 0; i < 5; i++) {
 				for (int j = 0; j < 9; j++) {
-					if (i * 9 + j < Kakutei) { CurrentVote1 += P1[i][j]; CurrentVote2 += P2[i][j]; }
+					if (i * 9 + j < Kakutei) {
+						CurrentVote1 += P1[i][j];
+						CurrentVote2 += P2[i][j];
+					}
 				}
 			}
 			DisVote1 += (CurrentVote1 - DisVote1 + 5) / 6;
@@ -1082,10 +1085,9 @@ void Main() {
 			// マウス判定
 			int MouseState = -1;
 			if (Rect{ 650, 20, 130, 60 }.mouseOver()) MouseState = 0;
-			if (MouseState == 0)
-				ButtonA[15] = Min(1.0, ButtonA[15] + 5.0 * Scene::DeltaTime());
-			else
-				ButtonA[15] = Max(0.0, ButtonA[15] - 5.0 * Scene::DeltaTime());
+			ButtonA[15] = MouseState == 0
+				? Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime())
+				: Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 
 			// クリックの状態
 			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {

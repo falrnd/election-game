@@ -242,7 +242,7 @@ void Main() {
 	const Font font10(10);
 	const Font font6(6);
 
-	const ColorF black02 = ColorF{ 0.2, 0.2, 0.2 };
+	const ColorF black02 = ColorF{ 0.2 };
 
 	// 初期値を設定
 	Initialize();
@@ -256,15 +256,15 @@ void Main() {
 			font60(U"Let's Win in the Election").draw(45, 45, Palette::White);
 			font30(U"～選挙で勝とう ゲーム版～").draw(205, 150, Palette::White);
 
-			Rect(75, 300, 140, 140).draw(ColorF(1.0, 1.0, 1.0, 0.5 + 0.5 * ButtonA[10]));
-			Rect(245, 300, 140, 140).draw(ColorF(1.0, 1.0, 1.0, 0.5 + 0.5 * ButtonA[11]));
-			Rect(415, 300, 140, 140).draw(ColorF(1.0, 1.0, 1.0, 0.5 + 0.5 * ButtonA[12]));
-			Rect(585, 300, 140, 140).draw(ColorF(1.0, 1.0, 1.0, 0.5 + 0.5 * ButtonA[13]));
+			Rect(75, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[10]));
+			Rect(245, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[11]));
+			Rect(415, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[12]));
+			Rect(585, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[13]));
 			font20(U"簡単").draw(125, 335, Palette::Black); font20(U"自分が現職").draw(95, 370, Palette::Black);
 			font20(U"普通").draw(295, 335, Palette::Black); font20(U"新人対決").draw(275, 370, Palette::Black);
 			font20(U"難しい").draw(455, 335, Palette::Black); font20(U"相手が現職").draw(437, 370, Palette::Black);
 			font20(U"とても難しい").draw(595, 335, Palette::Black); font20(U"相手が10選").draw(603, 370, Palette::Black);
-			font30(U"クリックしてレベルを選択").draw(220, 500, ColorF(1.0, 1.0, 1.0, Periodic::Sine0_1(1.5s)));
+			font30(U"クリックしてレベルを選択").draw(220, 500, AlphaF(Periodic::Sine0_1(1.5s)));
 
 			// マウスの状態
 			int MouseState = -1;
@@ -436,11 +436,11 @@ void Main() {
 			if (Turn % 3 == 0) font20(U"夜").draw(250, 340, black02);
 			if (Situation == 2) {
 				Rect(352, 338, 160, 30).draw(ColorF(0.25, 0.25, 0.55, Min(1.00, 2.0 * abs(WaitTime))));
-				font20(U"AIのターン").draw(380, 338, ColorF(1.00, 1.00, 1.00, Min(1.00, 2.0 * abs(WaitTime))));
+				font20(U"AIのターン").draw(380, 338, AlphaF(Min(1.00, 2.0 * abs(WaitTime))));
 			}
 			else {
 				Rect(352, 338, 160, 30).draw(ColorF(0.60, 0.10, 0.30, Min(1.00, 2.0 * abs(WaitTime))));
-				font20(U"あなたのターン").draw(362, 338, ColorF(1.00, 1.00, 1.00, Min(1.00, 2.0 * abs(WaitTime))));
+				font20(U"あなたのターン").draw(362, 338, AlphaF(Min(1.00, 2.0 * abs(WaitTime))));
 			}
 
 			// 下半分の描画
@@ -493,7 +493,7 @@ void Main() {
 
 				// 初めての場合
 				if (Hajimete == true) {
-					Rect(100, 100, 600, 400).draw(ColorF(1.0, 1.0, 1.0, 0.9));
+					Rect(100, 100, 600, 400).draw(AlphaF(0.9));
 					Rect(100, 100, 600, 400).drawFrame(3, black02);
 					font50(U"選挙戦へようこそ！").draw(120, 110, black02);
 					font18(U"あなたは、とある議員選挙の立候補者です。今日から 2 週間かけて").draw(120, 190, black02);
@@ -696,7 +696,7 @@ void Main() {
 				font30(U"開票に進む").draw(185, 505, ColorF(0.2, 0.2, 0.2, Min(1.00, abs(WaitTime) * 2.0)));
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2 && IsWaiting == 1) Rect(0, 0, 800, 600).draw(ColorF(1.00, 1.00, 1.00, Min(1.00, 1.0 + 1.25 * WaitTime)));
+				if (WaitTime <= 0.2 && IsWaiting == 1) Rect(0, 0, 800, 600).draw(AlphaF(Min(1.00, 1.0 + 1.25 * WaitTime)));
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					IsWaiting = 0; Situation = 7; WaitTime = 0; Vote_Kakutei();
 				}
@@ -980,13 +980,14 @@ void Main() {
 				if (CurrentVote1 >= CurrentVote2) {
 					Rect(0, 0, 800, 600).draw(ColorF(0.60, 0.10, 0.30, 0.90));
 					font80(U"当選！").draw(280, 30, Palette::White);
-					Rect(200, 400, 400, 100).draw(ColorF(1.0, 1.0, 1.0, 0.5 + 0.5 * ButtonA[9]));
+					Rect(200, 400, 400, 100).draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, ColorF(0.60, 0.10, 0.30));
+					ColorF{ Palette::White, 0.5 + 0.5 * ButtonA[9] };
 				}
 				else {
 					Rect(0, 0, 800, 600).draw(ColorF(0.25, 0.25, 0.55, 0.90));
 					font80(U"落選…").draw(280, 30, Palette::White);
-					Rect(200, 400, 400, 100).draw(ColorF(1.0, 1.0, 1.0, 0.5 + 0.5 * ButtonA[9]));
+					Rect(200, 400, 400, 100).draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, ColorF(0.25, 0.25, 0.55));
 				}
 				font30(U"あなた").draw(160, 200, Palette::White);

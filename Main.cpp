@@ -255,14 +255,14 @@ void Main() {
 		// ---------------------------------------------- 待ち受け画面 -----------------------------------------------------------
 		// -----------------------------------------------------------------------------------------------------------------------
 		if (Situation == 0) {
-			Rect(0, 0, 800, 600).draw(colorP2);
+			Rect{ 0, 0, 800, 600 }.draw(colorP2);
 			font60(U"Let's Win in the Election").draw(45, 45, Palette::White);
 			font30(U"～選挙で勝とう ゲーム版～").draw(205, 150, Palette::White);
 
-			Rect(75, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[10]));
-			Rect(245, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[11]));
-			Rect(415, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[12]));
-			Rect(585, 300, 140, 140).draw(AlphaF(0.5 + 0.5 * ButtonA[13]));
+			Rect{ 75, 300, 140 }.draw(AlphaF(0.5 + 0.5 * ButtonA[10]));
+			Rect{ 245, 300, 140 }.draw(AlphaF(0.5 + 0.5 * ButtonA[11]));
+			Rect{ 415, 300, 140 }.draw(AlphaF(0.5 + 0.5 * ButtonA[12]));
+			Rect{ 585, 300, 140 }.draw(AlphaF(0.5 + 0.5 * ButtonA[13]));
 			font20(U"簡単").draw(125, 335, Palette::Black); font20(U"自分が現職").draw(95, 370, Palette::Black);
 			font20(U"普通").draw(295, 335, Palette::Black); font20(U"新人対決").draw(275, 370, Palette::Black);
 			font20(U"難しい").draw(455, 335, Palette::Black); font20(U"相手が現職").draw(437, 370, Palette::Black);
@@ -298,18 +298,18 @@ void Main() {
 		// ----------------------------------------------- 選挙運動中 ------------------------------------------------------------
 		// -----------------------------------------------------------------------------------------------------------------------
 		if (Situation == 1 || Situation == 2 || Situation == 3 || Situation == 4 || Situation == 5 || Situation == 6 || Situation == 8) {
-			Rect(0, 330, 520, 270).draw(ColorF(0.90, 0.95, 1.00));
-			Rect(520, 330, 280, 270).draw(ColorF(0.80, 0.90, 1.00));
+			Rect{ 0, 330, 520, 270 }.draw(ColorF{ 0.90, 0.95, 1.00 });
+			Rect{ 520, 330, 280, 270 }.draw(ColorF{ 0.80, 0.90, 1.00 });
 
 			// 表の描画
 			font20(U"形勢速報").draw(540, 340, black02);
-			Rect(560, 385, 200, 196).draw(colorP2);
-			Rect(640, 413, 120, 168).draw(Palette::White);
-			for (int i = 0; i <= 7; i++) Line(560, 385 + 28 * i, 760, 385 + 28 * i).draw(2, black02);
-			Line(560, 385, 560, 581).draw(2, black02);
-			Line(640, 385, 640, 581).draw(2, black02);
-			Line(700, 385, 700, 581).draw(2, black02);
-			Line(760, 385, 760, 581).draw(2, black02);
+			Rect{ 560, 385, 200, 196 }.draw(colorP2);
+			Rect{ 640, 413, 120, 168 }.draw(Palette::White);
+			for (int i = 0; i <= 7; i++) Line{ 560, 385 + 28 * i, 760, 385 + 28 * i }.draw(2, black02);
+			Line{ 560, 385, 560, 581 }.draw(2, black02);
+			Line{ 640, 385, 640, 581 }.draw(2, black02);
+			Line{ 700, 385, 700, 581 }.draw(2, black02);
+			Line{ 760, 385, 760, 581 }.draw(2, black02);
 
 			// 形勢評価（計算）
 			double ExpVotes = 0, TotalVotes = 0;
@@ -355,7 +355,7 @@ void Main() {
 				if (WaitTime <= 0.2) wait_keisuu = Min(1.00, -1.25 * WaitTime);
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 9; j++) {
-						if (Choice[i][j] == true) Rect(45 + j * 50, 40 + i * 50, 50, 50).draw(ColorF(1.0, 0.6, 0.2, (0.4 + 0.6 * ButtonB[i][j]) * wait_keisuu));
+						if (Choice[i][j] == true) Rect{ 45 + j * 50, 40 + i * 50, 50 }.draw(ColorF{ 1.0, 0.6, 0.2, (0.4 + 0.6 * ButtonB[i][j]) * wait_keisuu });
 					}
 				}
 			}
@@ -389,7 +389,7 @@ void Main() {
 						rc = 0.65 - 0.10 * (-Keisei[i][j] - 15) / 15.0;
 					}
 					else { ra = 0.25; rb = 0.25; rc = 0.55; }
-					Rect(50 + j * 50, 45 + i * 50, 40, 40).draw(ColorF(ra, rb, rc));
+					Rect{ 50 + j * 50, 45 + i * 50, 40 }.draw(ColorF{ ra, rb, rc });
 					if (Wakamono[i][j] == true) font15(U"▼").draw(62 + j * 50, 45 + i * 50);
 				}
 			}
@@ -397,38 +397,27 @@ void Main() {
 			// 予想投票率
 			VoteRate1 = Min(99, VoteRate1);
 			VoteRate2 = Min(99, VoteRate2);
-			Rect(550, 165, 200, 120).drawFrame(1, 1, black02);
-			Line(550, 73, 670, 73).draw(2, ColorF{ 0.00 });
+			Rect{ 550, 165, 200, 120 }.drawFrame(1, 1, black02);
+			Line{ 550, 73, 670, 73 }.draw(2, ColorF{ 0.00 });
 			font20(U"予想投票率").draw(550, 45, black02);
 			font20(U"18～39歳：").draw(575, 80, black02); font20(VoteRate1).draw(705, 80, black02); font20(U"%").draw(730, 80, black02);
 			font20(U"40歳以上：").draw(575, 105, black02); font20(VoteRate2).draw(705, 105, black02); font20(U"%").draw(730, 105, black02);
 
 			// 凡例
 			font15(U"▼：若者の多い地区").draw(570, 180, black02);
-			Rect(570, 210, 20, 20).draw(colorP2);
-			Rect(593, 210, 20, 20).draw(ColorF(0.41, 0.41, 0.63));
-			Rect(616, 210, 20, 20).draw(ColorF(0.57, 0.57, 0.71));
-			Rect(639, 210, 20, 20).draw(ColorF{ 0.85 });
-			Rect(662, 210, 20, 20).draw(ColorF(0.92, 0.50, 0.71));
-			Rect(685, 210, 20, 20).draw(ColorF(0.96, 0.30, 0.63));
-			Rect(708, 210, 20, 20).draw(ColorF(1.00, 0.10, 0.55));
+			Rect{ 570, 210, 20 }.draw(colorP2);
+			Rect{ 593, 210, 20 }.draw(ColorF{ 0.41, 0.41, 0.63 });
+			Rect{ 616, 210, 20 }.draw(ColorF{ 0.57, 0.57, 0.71 });
+			Rect{ 639, 210, 20 }.draw(ColorF{ 0.85 });
+			Rect{ 662, 210, 20 }.draw(ColorF{ 0.92, 0.50, 0.71 });
+			Rect{ 685, 210, 20 }.draw(ColorF{ 0.96, 0.30, 0.63 });
+			Rect{ 708, 210, 20 }.draw(ColorF{ 1.00, 0.10, 0.55 });
 			font15(U"AI").draw(570, 230, colorP2);
 			font15(U"+30").draw(570, 246, colorP2);
-			font15(U"あなた").draw(685, 230, ColorF(1.00, 0.10, 0.55));
-			font15(U"+30").draw(699, 246, ColorF(1.00, 0.10, 0.55));
+			font15(U"あなた").draw(685, 230, ColorF{ 1.00, 0.10, 0.55 });
+			font15(U"+30").draw(699, 246, ColorF{ 1.00, 0.10, 0.55 });
 			font15(U"評価値").draw(628, 230, ColorF{ 0.50 });
 			font10(U"※評価値の付け方は GitHub 参照").draw(598, 270, ColorF{ 0.50 });
-			/*font20(U"凡例").draw(560, 166, Palette::White);
-			font15(U"▼：若者の多い地区").draw(570, 205, gray02);
-			Rect(570, 235, 20, 20).draw(colorP2);
-			Rect(593, 235, 20, 20).draw(ColorF(0.45, 0.45, 0.65));
-			Rect(616, 235, 20, 20).draw(ColorF(0.65, 0.65, 0.75));
-			Rect(639, 235, 20, 20).draw(ColorF{ 0.85 });
-			Rect(662, 235, 20, 20).draw(ColorF(0.90, 0.60, 0.75));
-			Rect(685, 235, 20, 20).draw(ColorF(0.95, 0.35, 0.65));
-			Rect(708, 235, 20, 20).draw(ColorF(1.00, 0.10, 0.55));
-			font15(U"AI優勢").draw(570, 255, colorP2);
-			font15(U"あなた優勢").draw(655, 255, ColorF(1.00, 0.10, 0.55));*/
 
 			// 左側の表示
 			font20(U"選挙戦").draw(15, 340, black02);
@@ -438,11 +427,11 @@ void Main() {
 			if (Turn % 3 == 2) font20(U"昼").draw(250, 340, black02);
 			if (Turn % 3 == 0) font20(U"夜").draw(250, 340, black02);
 			if (Situation == 2) {
-				Rect(352, 338, 160, 30).draw(ColorF{ colorP2, Min(1.00, 2.0 * abs(WaitTime)) });
+				Rect{ 352, 338, 160, 30 }.draw(ColorF{ colorP2, Min(1.00, 2.0 * abs(WaitTime)) });
 				font20(U"AIのターン").draw(380, 338, AlphaF(Min(1.00, 2.0 * abs(WaitTime))));
 			}
 			else {
-				Rect(352, 338, 160, 30).draw(ColorF{ colorP1, Min(1.00, 2.0 * abs(WaitTime)) });
+				Rect{ 352, 338, 160, 30 }.draw(ColorF{ colorP1, Min(1.00, 2.0 * abs(WaitTime)) });
 				font20(U"あなたのターン").draw(362, 338, AlphaF(Min(1.00, 2.0 * abs(WaitTime))));
 			}
 
@@ -456,18 +445,18 @@ void Main() {
 				if (Situation == 1) {
 					for (int i = 0; i < 6; ++i) {
 						double button = ButtonA[i];
-						Rect(20 - offset[i], 385 + 34 * i, 24).draw(ColorF{ 1.00 - 0.40 * button, 1.00 - 0.90 * button, 1.00 - 0.70 * button });
+						Rect{ 20 - offset[i], 385 + 34 * i, 24 }.draw(ColorF{ 1.00 - 0.40 * button, 1.00 - 0.90 * button, 1.00 - 0.70 * button });
 					}
 				}
 				else {
 					for (int i = 0; i < 6; ++i) {
 						double button = ButtonA[i];
-						Rect(20 - offset[i], 385 + 34 * i, 24).draw(ColorF{ 1.00 - 0.75 * button, 1.00 - 0.75 * button, 1.00 - 0.45 * button });
+						Rect{ 20 - offset[i], 385 + 34 * i, 24 }.draw(ColorF{ 1.00 - 0.75 * button, 1.00 - 0.75 * button, 1.00 - 0.45 * button });
 					}
 				}
 				auto color_frame = black02;
 				for (int i = 0; i < 6; ++i) {
-					Rect(20 - offset[i], 385 + 34 * i, 24).drawFrame(2, color_frame);
+					Rect{ 20 - offset[i], 385 + 34 * i, 24 }.drawFrame(2, color_frame);
 				}
 
 				// 文字の表示
@@ -487,7 +476,7 @@ void Main() {
 				font20(U"しています").draw(380, 450, ColorF{ colorP1, ButtonA[6] });
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.20) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, 1.0 + 2.0 * WaitTime));
+				if (WaitTime <= 0.20) Rect{ 0, 380, 500, 220 }.draw(ColorF{ 0.90, 0.95, 1.00, 1.0 + 2.0 * WaitTime });
 				if (WaitTime >= 0.00 && IsWaiting == 1) {
 					for (int i = 0; i < 14; i++) ButtonA[i] = 0;
 					IsWaiting = 0; Situation = 2; NextAI = AI_Choice();
@@ -496,8 +485,8 @@ void Main() {
 
 				// 初めての場合
 				if (Hajimete == true) {
-					Rect(100, 100, 600, 400).draw(AlphaF(0.9));
-					Rect(100, 100, 600, 400).drawFrame(3, black02);
+					Rect{ 100, 100, 600, 400 }.draw(AlphaF(0.9));
+					Rect{ 100, 100, 600, 400 }.drawFrame(3, black02);
 					font50(U"選挙戦へようこそ！").draw(120, 110, black02);
 					font18(U"あなたは、とある議員選挙の立候補者です。今日から 2 週間かけて").draw(120, 190, black02);
 					font18(U"選挙活動を行います。選挙で大切な三バン（地盤・カバン・看板）").draw(120, 220, black02);
@@ -506,7 +495,7 @@ void Main() {
 					font18(U"実際の選挙とは一切関係のない").draw(354, 295, Palette::Red);
 					font18(U"ことに注").draw(606, 295, black02);
 					font18(U"意してください。実際の選挙の方が難しいです。").draw(120, 325, black02);
-					Rect(250, 390, 300, 70).draw(ColorF(0.40, 0.40, 0.70, 0.50 + 0.50 * ButtonA[14]));
+					Rect{ 250, 390, 300, 70 }.draw(ColorF{ 0.40, 0.40, 0.70, 0.50 + 0.50 * ButtonA[14] });
 					font30(U"はじめる").draw(340, 400, Palette::White);
 				}
 			}
@@ -527,7 +516,7 @@ void Main() {
 				}
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.20) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, 1.0 + 2.0 * WaitTime));
+				if (WaitTime <= 0.20) Rect{ 0, 380, 500, 220 }.draw(ColorF{ 0.90, 0.95, 1.00, 1.0 + 2.0 * WaitTime });
 				if (WaitTime >= 0.00 && IsWaiting == 1) {
 					for (int i = 0; i < 14; i++) ButtonA[i] = 0;
 					Turn += 1; IsWaiting = 0; Situation = 1;
@@ -557,7 +546,7 @@ void Main() {
 				font10(U"※演説した場所の形勢が [演説力レベル] だけ上がります。").draw(245, 575, black02);
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, Min(1.00, 1.0 + 2.0 * WaitTime)));
+				if (WaitTime <= 0.2) Rect{ 0, 380, 500, 220 }.draw(ColorF{ 0.90, 0.95, 1.00, Min(1.00, 1.0 + 2.0 * WaitTime) });
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					for (int i = 0; i < 14; i++) ButtonA[i] = 0;
 					IsWaiting = 0; Situation = 2; NextAI = AI_Choice();
@@ -567,7 +556,7 @@ void Main() {
 			if (Situation == 8) {
 				font20(U"一日の終わりには").draw(45, 405, black02);
 				font20(U"形勢が隣に拡散します").draw(45, 435, black02);
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				Rect{ 150, 500, 220, 55 }.draw(ColorF{ 1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0) });
 				font30(U"確認する").draw(200, 505, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 				font10(U"※ 3 日目以降も、一日の終わりには同様のことが起こります。").draw(220, 575, black02);
 
@@ -576,7 +565,7 @@ void Main() {
 					for (int j = 0; j < 3; j++) {
 						double ra = 0.85, rb = 0.85, rc = 0.85;
 						if (i == 1 && j == 1) { ra = 0.60; rb = 0.10; rc = 0.30; }
-						Rect(300 + i * 20, 405 + j * 20, 16, 16).draw(ColorF(ra, rb, rc));
+						Rect{ 300 + i * 20, 405 + j * 20, 16 }.draw(ColorF{ ra, rb, rc });
 					}
 				}
 
@@ -586,12 +575,12 @@ void Main() {
 						double ra = 0.85, rb = 0.85, rc = 0.85;
 						if (i == 1 && j == 1) { ra = 0.60; rb = 0.10; rc = 0.30; }
 						else if (abs(i - 1) + abs(j - 1) <= 1) { ra = 0.75; rb = 0.60; rc = 0.65; }
-						Rect(420 + i * 20, 405 + j * 20, 16, 16).draw(ColorF(ra, rb, rc));
+						Rect{ 420 + i * 20, 405 + j * 20, 16 }.draw(ColorF{ ra, rb, rc });
 					}
 				}
 
 				// 矢印を描く
-				Rect(370, 424, 30, 12).draw(black02);
+				Rect{ 370, 424, 30, 12 }.draw(black02);
 				Triangle(400, 420, 400, 440, 415, 430).draw(black02);
 
 				// 遷移状態の場合
@@ -603,7 +592,7 @@ void Main() {
 			if (Situation == 4) {
 				font20(U"深夜に、ＳＮＳを通じた選挙活動が").draw(100, 420, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 				font20(U"若者に対して行われました").draw(140, 450, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				Rect{ 150, 500, 220, 55 }.draw(ColorF{ 1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0) });
 				font30(U"確認する").draw(200, 505, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 				font10(U"※若者の多い地区 1 箇所の形勢が [影響力レベル] だけ上がります。").draw(200, 575, black02);
 
@@ -619,13 +608,13 @@ void Main() {
 				font20((Turn + 2) / 3).draw(193 - 6 * ToString((Turn + 2) / 3).size(), 420, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 				font20(U"日目が始まりました！").draw(210, 420, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 				font20(U"「チャンスカード」を引いてください").draw(90, 450, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				Rect{ 150, 500, 220, 55 }.draw(ColorF{ 1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0) });
 				font30(U"カードを引く").draw(170, 505, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 
 				// カードがある場合
 				if (Card == 1 && WaitTime >= 0.05) {
-					Rect(240, 180, 320, 240).draw(ColorF(1.0, 1.0, 0.5, 0.9));
-					Rect(240, 180, 320, 240).drawFrame(3, black02);
+					Rect{ 240, 180, 320, 240 }.draw(ColorF{ 1.0, 1.0, 0.5, 0.9 });
+					Rect{ 240, 180, 320, 240 }.drawFrame(3, black02);
 
 					if (CardID == 0) {
 						font25(U"選挙への関心").draw(250, 190, black02);
@@ -672,12 +661,12 @@ void Main() {
 						font15(U"選挙カーが事故に遭う。").draw(250, 240, black02);
 						font15(U"70 万円支払う。").draw(250, 270, black02);
 					}
-					Rect(290, 330, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[8], 1.00 - 0.40 * ButtonA[8], Min(1.00, abs(WaitTime) * 2.0)));
+					Rect{ 290, 330, 220, 55 }.draw(ColorF{ 1.00, 1.00 - 0.20 * ButtonA[8], 1.00 - 0.40 * ButtonA[8], Min(1.00, abs(WaitTime) * 2.0) });
 					font30(U"確認する").draw(340, 335, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 				}
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, Min(1.00, 1.0 + 2.0 * WaitTime)));
+				if (WaitTime <= 0.2) Rect{ 0, 380, 500, 220 }.draw(ColorF{ 0.90, 0.95, 1.00, Min(1.00, 1.0 + 2.0 * WaitTime) });
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					IsWaiting = 0; Situation = 1; Card = 0;
 					if (CardID == 0) { VoteRate1 += 10; }
@@ -695,11 +684,11 @@ void Main() {
 
 			if (Situation == 6) {
 				font20(U"いよいよ投票日です！").draw(160, 420, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
-				Rect(150, 500, 220, 55).draw(ColorF(1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0)));
+				Rect{ 150, 500, 220, 55 }.draw(ColorF{ 1.00, 1.00 - 0.20 * ButtonA[7], 1.00 - 0.40 * ButtonA[7], Min(1.00, abs(WaitTime) * 2.0) });
 				font30(U"開票に進む").draw(185, 505, ColorF{ 0.2, Min(1.00, abs(WaitTime) * 2.0) });
 
 				// 遷移状態の場合
-				if (WaitTime <= 0.2 && IsWaiting == 1) Rect(0, 0, 800, 600).draw(AlphaF(Min(1.00, 1.0 + 1.25 * WaitTime)));
+				if (WaitTime <= 0.2 && IsWaiting == 1) Rect{ 0, 0, 800, 600 }.draw(AlphaF(Min(1.00, 1.0 + 1.25 * WaitTime)));
 				if (WaitTime >= 0.0 && IsWaiting == 1) {
 					IsWaiting = 0; Situation = 7; WaitTime = 0; Vote_Kakutei();
 				}
@@ -920,11 +909,11 @@ void Main() {
 						rc = 0.65 - 0.10 * (-Keisei[i][j] - 15) / 15.0;
 					}
 					else { ra = 0.25; rb = 0.25; rc = 0.55; }
-					Rect(60 + j * 32, 120 + i * 32, 24, 24).draw(ColorF(ra, rb, rc));
+					Rect{ 60 + j * 32, 120 + i * 32, 24 }.draw(ColorF{ ra, rb, rc });
 					if (Wakamono[i][j] == true) font6(U"▼").draw(69 + j * 32, 120 + i * 32, Palette::White);
 				}
 			}
-			Rect(120, 288, 160, 75).draw(black02);
+			Rect{ 120, 288, 160, 75 }.draw(black02);
 			font30(U"予測").draw(170, 290, Palette::White);
 			font15(U"有権者は１万人／区画").draw(125, 330, Palette::White);
 
@@ -935,7 +924,7 @@ void Main() {
 					if (i * 9 + j >= Kakutei || P1[i][j] == P2[i][j]) { ra = 0.85; rb = 0.85; rc = 0.85; }
 					else if (P1[i][j] > P2[i][j]) { ra = 1.00; rb = 0.10; rc = 0.55; }
 					else { ra = 0.25; rb = 0.25; rc = 0.55; }
-					Rect(460 + j * 32, 120 + i * 32, 24, 24).draw(ColorF(ra, rb, rc));
+					Rect{ 460 + j * 32, 120 + i * 32, 24 }.draw(ColorF{ ra, rb, rc });
 					if (i * 9 + j < Kakutei) {
 						int wari = (int)(100.0 * P1[i][j] / (P1[i][j] + P2[i][j]) + 0.5); wari = Min(99, wari);
 						if (wari < 10) font15(wari).draw(472 + j * 32, 120 + i * 32, Palette::White);
@@ -943,12 +932,12 @@ void Main() {
 					}
 				}
 			}
-			Rect(520, 288, 160, 75).draw(black02);
+			Rect{ 520, 288, 160, 75 }.draw(black02);
 			font30(U"確定").draw(570, 290, Palette::White);
 			font15(U"数字はあなたの得票率").draw(525, 330, Palette::White);
 
 			// 矢印を描く
-			Rect(360, 193, 60, 14).draw(black02);
+			Rect{ 360, 193, 60, 14 }.draw(black02);
 			Triangle(420, 185, 420, 215, 440, 200).draw(black02);
 
 			// 現在の票数
@@ -962,10 +951,10 @@ void Main() {
 			DisVote2 += (CurrentVote2 - DisVote2 + 5) / 6;
 
 			// 票数のグラフ
-			Rect(40, 510, 720.0 * DisVote1 / TotalVote, 60).draw(colorP1);
-			Rect(760.0 - 720.0 * DisVote2 / TotalVote, 510, 720.0 * DisVote2 / TotalVote, 60).draw(colorP2);
-			Rect(40, 510, 720, 60).drawFrame(3, black02);
-			Line(400, 510, 400, 570).draw(LineStyle::SquareDot, 2, Color(20, 20, 20)); font20(U"▼").draw(390, 485, black02);
+			RectF{ 40, 510, 720.0 * DisVote1 / TotalVote, 60 }.draw(colorP1);
+			RectF{ 760.0 - 720.0 * DisVote2 / TotalVote, 510, 720.0 * DisVote2 / TotalVote, 60 }.draw(colorP2);
+			Rect{ 40, 510, 720, 60 }.drawFrame(3, black02);
+			Line{ 400, 510, 400, 570 }.draw(LineStyle::SquareDot, 2, Color(20, 20, 20)); font20(U"▼").draw(390, 485, black02);
 
 			// 赤の票数
 			font50(DisVote1).draw(40, 440, colorP1);
@@ -981,16 +970,16 @@ void Main() {
 				int wari2 = 100 - wari1;
 
 				if (CurrentVote1 >= CurrentVote2) {
-					Rect(0, 0, 800, 600).draw(ColorF{ colorP1, 0.90 });
+					Rect{ 0, 0, 800, 600 }.draw(ColorF{ colorP1, 0.90 });
 					font80(U"当選！").draw(280, 30, Palette::White);
-					Rect(200, 400, 400, 100).draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
+					Rect{ 200, 400, 400, 100 }.draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, colorP1);
 					ColorF{ Palette::White, 0.5 + 0.5 * ButtonA[9] };
 				}
 				else {
-					Rect(0, 0, 800, 600).draw(ColorF{ colorP2, 0.90 });
+					Rect{ 0, 0, 800, 600 }.draw(ColorF{ colorP2, 0.90 });
 					font80(U"落選…").draw(280, 30, Palette::White);
-					Rect(200, 400, 400, 100).draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
+					Rect{ 200, 400, 400, 100 }.draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, colorP2);
 				}
 				font30(U"あなた").draw(160, 200, Palette::White);
@@ -1023,10 +1012,10 @@ void Main() {
 			WaitTime += Scene::DeltaTime();
 
 			// 票数のグラフ
-			Rect(40, 510, 720.0 * DisVote1 / TotalVote, 60).draw(colorP1);
-			Rect(760.0 - 720.0 * DisVote2 / TotalVote, 510, 720.0 * DisVote2 / TotalVote, 60).draw(colorP2);
-			Rect(40, 510, 720, 60).drawFrame(3, black02);
-			Line(400, 510, 400, 570).draw(LineStyle::SquareDot, 2, Color(20, 20, 20)); font20(U"▼").draw(390, 485, black02);
+			RectF{ 40, 510, 720.0 * DisVote1 / TotalVote, 60 }.draw(colorP1);
+			RectF{ 760.0 - 720.0 * DisVote2 / TotalVote, 510, 720.0 * DisVote2 / TotalVote, 60 }.draw(colorP2);
+			Rect{ 40, 510, 720, 60 }.drawFrame(3, black02);
+			Line{ 400, 510, 400, 570 }.draw(LineStyle::SquareDot, 2, Color(20, 20, 20)); font20(U"▼").draw(390, 485, black02);
 			font50(DisVote1).draw(40, 440, colorP1);
 			font30(U"票").draw(40 + 32 * ToString(DisVote1).size(), 460, colorP1);
 			font50(DisVote2).draw(730 - 32 * ToString(DisVote2).size(), 440, colorP2);
@@ -1037,13 +1026,13 @@ void Main() {
 				if (WaitTime < 0.1 * i) continue;
 				double ax = 80.0 + 300.0 * (i + 0) / 14, ay = 360.0 - 220.0 * History[i + 0] / 100; ax = Min(ax, 80.0 + 3000.0 * WaitTime / 14.0);
 				double bx = 80.0 + 300.0 * (i + 1) / 14, by = 360.0 - 220.0 * History[i + 1] / 100; bx = Min(bx, 80.0 + 3000.0 * WaitTime / 14.0);
-				Quad(Vec2(ax, ay), Vec2(bx, by), Vec2(bx, 360.0), Vec2(ax, 360.0)).draw(ColorF{ colorP1, 0.70 });
-				Quad(Vec2(ax, ay), Vec2(bx, by), Vec2(bx, 140.0), Vec2(ax, 140.0)).draw(ColorF{ colorP2, 0.70 });
+				Quad{ Vec2{ ax, ay }, Vec2{ bx, by }, Vec2{ bx, 360.0 }, Vec2{ ax, 360.0 } }.draw(ColorF{ colorP1, 0.70 });
+				Quad{ Vec2{ ax, ay }, Vec2{ bx, by }, Vec2{ bx, 140.0 }, Vec2{ ax, 140.0 } }.draw(ColorF{ colorP2, 0.70 });
 			}
-			Rect(80, 140, 300, 220).drawFrame(3, black02);
-			Line(80, 195, 380, 195).draw(LineStyle::SquareDot, 2, black02); font15(U"75%").draw(45, 185, black02);
-			Line(80, 250, 380, 250).draw(LineStyle::SquareDot, 2, black02); font15(U"50%").draw(45, 240, black02);
-			Line(80, 305, 380, 305).draw(LineStyle::SquareDot, 2, black02); font15(U"25%").draw(45, 295, black02);
+			Rect{ 80, 140, 300, 220 }.drawFrame(3, black02);
+			Line{ 80, 195, 380, 195 }.draw(LineStyle::SquareDot, 2, black02); font15(U"75%").draw(45, 185, black02);
+			Line{ 80, 250, 380, 250 }.draw(LineStyle::SquareDot, 2, black02); font15(U"50%").draw(45, 240, black02);
+			Line{ 80, 305, 380, 305 }.draw(LineStyle::SquareDot, 2, black02); font15(U"25%").draw(45, 295, black02);
 			font15(U"0日目").draw(80, 365, black02);
 			font15(U"7日目").draw(210, 365, black02);
 			font15(U"14日目").draw(335, 365, black02);
@@ -1080,14 +1069,14 @@ void Main() {
 						rc = 0.65 - 0.10 * (-History2[Amari][i][j] - 15) / 15.0;
 					}
 					else { ra = 0.25; rb = 0.25; rc = 0.55; }
-					Rect(440 + j * 32, 210 + i * 32, 24, 24).draw(ColorF(ra, rb, rc));
+					Rect{ 440 + j * 32, 210 + i * 32, 24 }.draw(ColorF{ ra, rb, rc });
 				}
 			}
 			font30(Amari).draw(440, 160, black02);
 			font20(U"日目時点での形勢").draw(440 + 20 * ToString(Amari).size(), 170, black02);
 
 			// 終了ボタン
-			Rect(650, 20, 130, 60).draw(ColorF(1.0, 0.5, 0.5, 0.5 + 0.5 * ButtonA[15]));
+			Rect{ 650, 20, 130, 60 }.draw(ColorF{ 1.0, 0.5, 0.5, 0.5 + 0.5 * ButtonA[15] });
 			font30(U"終了").draw(685, 30, Palette::Black);
 
 			// マウス判定

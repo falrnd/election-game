@@ -438,11 +438,11 @@ void Main() {
 			if (Turn % 3 == 2) font20(U"昼").draw(250, 340, black02);
 			if (Turn % 3 == 0) font20(U"夜").draw(250, 340, black02);
 			if (Situation == 2) {
-				Rect(352, 338, 160, 30).draw(ColorF(0.25, 0.25, 0.55, Min(1.00, 2.0 * abs(WaitTime))));
+				Rect(352, 338, 160, 30).draw(ColorF{ colorP2, Min(1.00, 2.0 * abs(WaitTime)) });
 				font20(U"AIのターン").draw(380, 338, AlphaF(Min(1.00, 2.0 * abs(WaitTime))));
 			}
 			else {
-				Rect(352, 338, 160, 30).draw(ColorF(0.60, 0.10, 0.30, Min(1.00, 2.0 * abs(WaitTime))));
+				Rect(352, 338, 160, 30).draw(ColorF{ colorP1, Min(1.00, 2.0 * abs(WaitTime)) });
 				font20(U"あなたのターン").draw(362, 338, AlphaF(Min(1.00, 2.0 * abs(WaitTime))));
 			}
 
@@ -483,8 +483,8 @@ void Main() {
 			if (Situation == 1) {
 				font20(U"クリックで").draw(380, 520, ColorF{ 0.2, Periodic::Sine0_1(1.5s) });
 				font20(U"行動を選択！").draw(380, 550, ColorF{ 0.2, Periodic::Sine0_1(1.5s) });
-				font20(U"資金が不足").draw(380, 420, ColorF(0.6, 0.1, 0.3, ButtonA[6]));
-				font20(U"しています").draw(380, 450, ColorF(0.6, 0.1, 0.3, ButtonA[6]));
+				font20(U"資金が不足").draw(380, 420, ColorF{ colorP1, ButtonA[6] });
+				font20(U"しています").draw(380, 450, ColorF{ colorP1, ButtonA[6] });
 
 				// 遷移状態の場合
 				if (WaitTime <= 0.20) Rect(0, 380, 500, 220).draw(ColorF(0.90, 0.95, 1.00, 1.0 + 2.0 * WaitTime));
@@ -503,7 +503,7 @@ void Main() {
 					font18(U"選挙活動を行います。選挙で大切な三バン（地盤・カバン・看板）").draw(120, 220, black02);
 					font18(U"を獲得し、SNS の力も活用して有利に選挙戦を進めましょう！").draw(120, 250, black02);
 					font18(U"なお、このゲームの設定は、").draw(120, 295, black02);
-					font18(U"実際の選挙とは一切関係のない").draw(354, 295, ColorF(1.0, 0.0, 0.0));
+					font18(U"実際の選挙とは一切関係のない").draw(354, 295, Palette::Red);
 					font18(U"ことに注").draw(606, 295, black02);
 					font18(U"意してください。実際の選挙の方が難しいです。").draw(120, 325, black02);
 					Rect(250, 390, 300, 70).draw(ColorF(0.40, 0.40, 0.70, 0.50 + 0.50 * ButtonA[14]));
@@ -981,14 +981,14 @@ void Main() {
 				int wari2 = 100 - wari1;
 
 				if (CurrentVote1 >= CurrentVote2) {
-					Rect(0, 0, 800, 600).draw(ColorF(0.60, 0.10, 0.30, 0.90));
+					Rect(0, 0, 800, 600).draw(ColorF{ colorP1, 0.90 });
 					font80(U"当選！").draw(280, 30, Palette::White);
 					Rect(200, 400, 400, 100).draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, colorP1);
 					ColorF{ Palette::White, 0.5 + 0.5 * ButtonA[9] };
 				}
 				else {
-					Rect(0, 0, 800, 600).draw(ColorF(0.25, 0.25, 0.55, 0.90));
+					Rect(0, 0, 800, 600).draw(ColorF{ colorP2, 0.90 });
 					font80(U"落選…").draw(280, 30, Palette::White);
 					Rect(200, 400, 400, 100).draw(AlphaF(0.5 + 0.5 * ButtonA[9]));
 					font50(U"結果画面へ").draw(275, 416, colorP2);

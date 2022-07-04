@@ -1,5 +1,5 @@
 ﻿#include <Siv3D.hpp>
-#include <ctime>
+#include <random>
 
 struct Player {
 	int Speech;    // 演説力
@@ -110,11 +110,8 @@ void AI_Enzetsu() {
 }
 
 double Norm() {
-	double cnt = 0;
-	for (int i = 0; i < 10000; i++) {
-		if (rand() % 2 == 0) cnt += 1.0;
-	}
-	return (cnt - 5000.0) / 50.0;
+	static std::binomial_distribution dist{ 10000, 0.5 };
+	return (dist(s3d::GetDefaultRNG()) - 5000.0) / 50.0;
 }
 
 void Vote_Kakutei() {

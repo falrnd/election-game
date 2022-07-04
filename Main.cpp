@@ -273,7 +273,7 @@ void Main() {
 			int MouseState = -1;
 			for (int i = 0; i < 4; ++i) {
 				if (Rect{ 75 + 170 * i, 300, 140 }.mouseOver()) {
-					MouseState = 1;
+					MouseState = i;
 					break;
 				}
 			}

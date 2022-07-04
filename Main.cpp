@@ -225,7 +225,6 @@ void Refresh() {
 
 void Main() {
 	// 背景を白にする
-	srand((unsigned)time(NULL));
 	Scene::SetBackground(ColorF(1.0, 1.0, 1.0));
 
 	// フォントを用意
@@ -247,10 +246,6 @@ void Main() {
 	Initialize();
 
 	while (System::Update()) {
-		double MouseX = Cursor::PosF().x;
-		double MouseY = Cursor::PosF().y;
-
-
 		// -----------------------------------------------------------------------------------------------------------------------
 		// ---------------------------------------------- 待ち受け画面 -----------------------------------------------------------
 		// -----------------------------------------------------------------------------------------------------------------------
@@ -271,10 +266,13 @@ void Main() {
 
 			// マウスの状態
 			int MouseState = -1;
-			if (MouseX >= 75.0 && MouseX <= 215.0 && MouseY >= 300.0 && MouseY <= 440.0) MouseState = 0;
-			if (MouseX >= 245.0 && MouseX <= 385.0 && MouseY >= 300.0 && MouseY <= 440.0) MouseState = 1;
-			if (MouseX >= 415.0 && MouseX <= 555.0 && MouseY >= 300.0 && MouseY <= 440.0) MouseState = 2;
-			if (MouseX >= 585.0 && MouseX <= 725.0 && MouseY >= 300.0 && MouseY <= 440.0) MouseState = 3;
+			for (int i = 0; i < 4; ++i) {
+				if (Rect{ 75 + 170 * i, 300, 140 }.mouseOver()) {
+					MouseState = 1;
+					break;
+				}
+			}
+
 			for (int i = 10; i < 14; i++) {
 				if (i != MouseState + 10) ButtonA[i] = Max(0.0, ButtonA[i] - 5.0 * Scene::DeltaTime());
 				if (i == MouseState + 10) ButtonA[i] = Min(1.0, ButtonA[i] + 5.0 * Scene::DeltaTime());
@@ -711,9 +709,12 @@ void Main() {
 			if (Situation == 1 && Hajimete == true) {
 				// マウスの状態
 				int MouseState = -1;
-				if (MouseX >= 250.0 && MouseX <= 550.0 && MouseY >= 390.0 && MouseY <= 460.0) MouseState = 0;
-				if (MouseState == 0) ButtonA[14] = Min(1.0, ButtonA[14] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[14] = Max(0.0, ButtonA[14] - 5.0 * Scene::DeltaTime());
+
+				if (Rect{ 250, 390, 300, 170 }.mouseOver()) MouseState = 0;
+				if (MouseState == 0)
+					ButtonA[14] = Min(1.0, ButtonA[14] + 5.0 * Scene::DeltaTime());
+				else
+					ButtonA[14] = Max(0.0, ButtonA[14] - 5.0 * Scene::DeltaTime());
 
 				// クリックの状態
 				if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down()) {
@@ -765,14 +766,16 @@ void Main() {
 
 			if (Situation == 3) {
 				int StateX = -1, StateY = -1;
-				if (MouseX >= 45.0 && MouseX <= 495.0 && MouseY >= 40.0 && MouseY <= 490.0) {
-					StateY = Max(0, Min(8, (int)((MouseX - 45.0) / 50.0)));
-					StateX = Max(0, Min(4, (int)((MouseY - 40.0) / 50.0)));
+				if (Rect{ 45, 40, 450 }.mouseOver()) {
+					StateY = Clamp((int)((Cursor::PosF().x - 45.0) / 50.0), 0, 8);
+					StateX = Clamp((int)((Cursor::PosF().y - 40.0) / 50.0), 0, 4);
 				}
 				for (int i = 0; i < 5; i++) {
 					for (int j = 0; j < 9; j++) {
-						if (i == StateX && j == StateY) ButtonB[i][j] = Min(1.0, ButtonB[i][j] + 5.0 * Scene::DeltaTime());
-						else ButtonB[i][j] = Max(0.0, ButtonB[i][j] - 5.0 * Scene::DeltaTime());
+						if (i == StateX && j == StateY)
+							ButtonB[i][j] = Min(1.0, ButtonB[i][j] + 5.0 * Scene::DeltaTime());
+						else
+							ButtonB[i][j] = Max(0.0, ButtonB[i][j] - 5.0 * Scene::DeltaTime());
 					}
 				}
 				WaitTime += Scene::DeltaTime();
@@ -791,9 +794,11 @@ void Main() {
 
 			if (Situation == 8) {
 				int MouseState = -1;
-				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
-				if (MouseState == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
+				if (MouseState == 0)
+					ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
+				else
+					ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -805,9 +810,11 @@ void Main() {
 
 			if (Situation == 4) {
 				int MouseState = -1;
-				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
-				if (MouseState == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
-				if (MouseState != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
+				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
+				if (MouseState == 0)
+					ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
+				else
+					ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				WaitTime += Scene::DeltaTime();
 
 				// クリックの状態
@@ -819,8 +826,8 @@ void Main() {
 
 			if (Situation == 5) {
 				int MouseState = -1;
-				if (MouseX >= 150.0 && MouseX <= 370.0 && MouseY >= 500.0 && MouseY <= 555.0) MouseState = 0;
-				if (MouseX >= 290.0 && MouseX <= 510.0 && MouseY >= 330.0 && MouseY <= 385.0) MouseState = 1;
+				if (Rect{ 150, 500, 220, 55 }.mouseOver()) MouseState = 0;
+				if (Rect{ 290, 330, 220, 55 }.mouseOver()) MouseState = 1;
 				if (MouseState == 0 && Card == 0) ButtonA[7] = Min(1.0, ButtonA[7] + 5.0 * Scene::DeltaTime());
 				if (MouseState != 0 || Card != 0) ButtonA[7] = Max(0.0, ButtonA[7] - 5.0 * Scene::DeltaTime());
 				if (MouseState == 1 && Card == 1) ButtonA[8] = Min(1.0, ButtonA[8] + 5.0 * Scene::DeltaTime());
@@ -991,7 +998,7 @@ void Main() {
 
 			// マウス判定
 			int MouseState = -1;
-			if (MouseX >= 200.0 && MouseX <= 600.0 && MouseY >= 400.0 && MouseY <= 500.0) MouseState = 0;
+			if (Rect{ 200, 400, 400, 100 }.mouseOver()) MouseState = 0;
 			if (MouseState == 0) ButtonA[9] = Min(1.0, ButtonA[9] + 5.0 * Scene::DeltaTime());
 			if (MouseState != 0) ButtonA[9] = Max(0.0, ButtonA[9] - 5.0 * Scene::DeltaTime());
 
@@ -1079,9 +1086,11 @@ void Main() {
 
 			// マウス判定
 			int MouseState = -1;
-			if (MouseX >= 650.0 && MouseX <= 780.0 && MouseY >= 20.0 && MouseY <= 80.0) MouseState = 0;
-			if (MouseState == 0) ButtonA[15] = Min(1.0, ButtonA[15] + 5.0 * Scene::DeltaTime());
-			if (MouseState != 0) ButtonA[15] = Max(0.0, ButtonA[15] - 5.0 * Scene::DeltaTime());
+			if (Rect{ 650, 20, 130, 60 }.mouseOver()) MouseState = 0;
+			if (MouseState == 0)
+				ButtonA[15] = Min(1.0, ButtonA[15] + 5.0 * Scene::DeltaTime());
+			else
+				ButtonA[15] = Max(0.0, ButtonA[15] - 5.0 * Scene::DeltaTime());
 
 			// クリックの状態
 			if (Scene::Time() - GetLastClick >= 0.1 && MouseL.down() && WaitTime >= 0.0) {

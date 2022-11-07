@@ -18,9 +18,10 @@ int Card = 0, CardID = -1;
 // ゲームの状況
 bool Hajimete = true;
 bool HajimeteEnzetsu = true;
-bool Choice[5][9];
-bool Wakamono[5][9];
-int Keisei[5][9], NewKeisei[5][9];
+Grid<bool> Choice{ 9, 5 };
+Grid<bool> Wakamono{ 9, 5 };
+Grid<int> Keisei{ 9, 5 };
+Grid<int> NewKeisei{ 9, 5 };
 int VoteRate1 = 20;
 int VoteRate2 = 60;
 int NextAI = 1;
@@ -131,8 +132,10 @@ void Vote_Kakutei() {
 
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 9; j++) {
-			if (Wakamono[i][j] == true)  FinalVote1 += P1[i][j] + P2[i][j];
-			if (Wakamono[i][j] == false) FinalVote2 += P1[i][j] + P2[i][j];
+			if (Wakamono[i][j])
+				FinalVote1 += P1[i][j] + P2[i][j];
+			else
+				FinalVote2 += P1[i][j] + P2[i][j];
 			FinalVote3 += P1[i][j] + P2[i][j];
 		}
 	}
@@ -143,11 +146,8 @@ void Vote_Kakutei() {
 }
 
 void Initialize() {
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 9; j++) {
-			Keisei[i][j] = 0; Wakamono[i][j] = false;
-		}
-	}
+	Keisei.fill(0);
+	Wakamono.fill(false);
 	for (int t = 0; t < 15; t++) {
 		while (true) {
 			int sx = Random(4);
